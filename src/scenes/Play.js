@@ -10,9 +10,19 @@ class Play extends Phaser.Scene {
         this.load.image('starfield', './assets/starfield.png');
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.audio('sfx_back_music', './assets/backmusic.wav') //Copy-right Free Music: Fluffing a Duck by Kevin MacLeod
     }
 
     create() {
+
+        // play Music to change the mood of the game
+
+        this.playMusic = this.sound.add('sfx_back_music');
+
+        this.playMusic.setLoop(true); // Loops the Music
+        this.playMusic.play(); // play the music
+
+
         // place tile sprite
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
 
@@ -78,10 +88,12 @@ class Play extends Phaser.Scene {
     update() {
         // check key input for restart / menu
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.playMusic.stop(); // stops the music so it doesn't overlap!
             this.scene.restart();
         }
 
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.playMusic.stop(); // stops the music
             this.scene.start("menuScene");
         }
 
