@@ -37,12 +37,12 @@ class Play extends Phaser.Scene {
 
 
         // green UI background
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x007100).setOrigin(0, 0);
         // white borders
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
+        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xf88485).setOrigin(0 ,0);
+        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xf88485).setOrigin(0 ,0);
+        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xf88485).setOrigin(0 ,0);
+        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xf88485).setOrigin(0 ,0);
 
         // add Rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width/2+40, game.config.height - borderUISize - borderPadding, 'rocket', 0, keyLEFT, keyRIGHT, keyL).setOrigin(0.5, 0);
@@ -64,14 +64,14 @@ class Play extends Phaser.Scene {
 
         // initialize score
         this.p1Score = 0;
-        this.p2Score = 0
+        this.p2Score = 0;
 
         // display p1 score
         let score1Config = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            backgroundColor: '#61cfe8',
+            color: '#141a15',
             align: 'right',
             padding: {
                 top: 5,
@@ -83,10 +83,10 @@ class Play extends Phaser.Scene {
 
         // display p2 score
         let score2Config = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            backgroundColor: '#61cfe8',
+            color: '#141a15',
             align: 'right',
             padding: {
                 top: 5,
@@ -134,29 +134,30 @@ class Play extends Phaser.Scene {
         // check collisions p1
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
-            this.shipExplode(this.ship03);
+            this.shipExplode(this.ship03, true);
         }
         if (this.checkCollision(this.p1Rocket, this.ship02)) {
             this.p1Rocket.reset();
-            this.shipExplode(this.ship02);
+            this.shipExplode(this.ship02, true);
         }
         if (this.checkCollision(this.p1Rocket, this.ship01)) {
             this.p1Rocket.reset();
-            this.shipExplode(this.ship01);
+            this.shipExplode(this.ship01, true);
+
         }
 
         // check collisions p2
         if(this.checkCollision(this.p2Rocket, this.ship03)) {
             this.p2Rocket.reset();
-            this.shipExplode(this.ship03);
+            this.shipExplode(this.ship03, false);
         }
         if (this.checkCollision(this.p2Rocket, this.ship02)) {
             this.p2Rocket.reset();
-            this.shipExplode(this.ship02);
+            this.shipExplode(this.ship02, false);          
         }
         if (this.checkCollision(this.p2Rocket, this.ship01)) {
             this.p2Rocket.reset();
-            this.shipExplode(this.ship01);
+            this.shipExplode(this.ship01, false);     
         }
     }
 
@@ -172,7 +173,7 @@ class Play extends Phaser.Scene {
         }
     }
 
-    shipExplode(ship) {
+    shipExplode(ship, isPlayer1) {
         // temporarily hide ship
         ship.alpha = 0;                         
         // create explosion sprite at ship's position
@@ -183,13 +184,17 @@ class Play extends Phaser.Scene {
             ship.alpha = 1;                       // make ship visible again
             boom.destroy();                       // remove explosion sprite
         });
-
-        // if p1 hits the rocket first, then add ship.points
-        // if p2 hits the rocket, then add ship.points
-        // score add and repaint
-        this.p1Score += ship.points;
-        this.scoreLeft.text = this.p1Score; 
         
+        if (isPlayer1) {
+            this.p1Score += ship.points;
+            this.scoreLeft.text = this.p1Score;
+        }
+
+        else {
+            this.p2Score += ship.points;
+            this.scoreRight.text = this.p2Score;
+        }
+
         this.sound.play('sfx_explosion');
       }
 }
