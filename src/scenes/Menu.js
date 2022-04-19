@@ -53,11 +53,10 @@ class Menu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
           // Player 1 Only Mode
           this.menuMusic.stop(); // stops the music
-
-          // this.sound.get(“nameOfSound”).stop();
           game.settings = {
             spaceshipSpeed: 3,
             gameTimer: 60000
+            //multiplayer: false  // True if multiplayer
           }
           this.sound.play('sfx_select');
           this.scene.start("playScene");    
@@ -66,8 +65,9 @@ class Menu extends Phaser.Scene {
           // Player 2 Only Mode
           this.menuMusic.stop(); // stops the music
           game.settings = {
-            spaceshipSpeed: 4,
-            gameTimer: 45000    
+            spaceshipSpeed: 3,
+            gameTimer: 60000
+            //multiplayer: true // True if multiplayer   
           }
           this.sound.play('sfx_select');
           this.scene.start("playScene");    
