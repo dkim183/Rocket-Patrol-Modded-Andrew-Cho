@@ -5,16 +5,22 @@ class Play extends Phaser.Scene {
 
     preload() {
         // load images/tile sprites
-        this.load.image('rocket', './assets/rocket.png');
-        this.load.image('spaceship', './assets/spaceship.png');
-        this.load.image('starfield', './assets/starfield.png');
+        this.load.image('p1Fist', './assets/p1Fist.png');
+        this.load.image('p2Fist', './assets/p2Fist.png');
+        this.load.image('spaceship', './assets/headvoices.png');
+        this.load.image('starfield', './assets/colorful.png');
         // load spritesheet
-        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('explosion', './assets/headexplode.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.audio('sfx_back_music', './assets/backmusic.wav') //Copy-right Free Music: Fluffing a Duck by Kevin MacLeod
-        this.load.audio('sfx_explosion1', './assets/heavyOuch.wav') //
-        this.load.audio('sfx_explosion2', './assets/ouch.wav')
-        this.load.audio('sfx_explosion3', './assets/whomadethisgame.wav')
-    }
+        this.load.audio('sfx_explosion1', './assets/heavyOuch.wav') // Voice made within https://15.ai
+        this.load.audio('sfx_explosion2', './assets/ouch.wav')     //Home made with audacity
+        this.load.audio('sfx_explosion3', './assets/whomadethisgame.wav')  //Home made with audacity
+        this.load.audio('sfx_explosion4', './assets/breh.wav')    // Home made with audacity
+        this.load.audio('sfx_explosion5', './assets/spyMad.wav') // Voice made within https://15.ai
+        this.load.audio('sfx_explosion6', './assets/soldierDying.wav') // Voice made within https://15.ai
+        this.load.audio('sfx_explosion7', './assets/reverb.wav') // Home made with audacity
+        this.load.audio('sfx_explosion8', './assets/damn.wav') // Home made with audacity
+    } 
 
     create() {
 
@@ -39,8 +45,9 @@ class Play extends Phaser.Scene {
         keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
 
 
-        // green UI background
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x007100).setOrigin(0, 0);
+        // // green UI background
+        // this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x007100).setOrigin(0, 0);
+
         // white borders
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xf88485).setOrigin(0 ,0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xf88485).setOrigin(0 ,0);
@@ -48,8 +55,8 @@ class Play extends Phaser.Scene {
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xf88485).setOrigin(0 ,0);
 
         // add Rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width/2+40, game.config.height - borderUISize - borderPadding, 'rocket', 0, keyLEFT, keyRIGHT, keyL).setOrigin(0.5, 0);
-        this.p2Rocket = new Rocket(this, game.config.width/2-40, game.config.height - borderUISize - borderPadding, 'rocket', 0, keyA, keyD, keyG).setOrigin(0.5, 0);
+        this.p1Rocket = new Rocket(this, game.config.width/2+40, game.config.height - borderUISize - borderPadding, 'p1Fist', 0, keyLEFT, keyRIGHT, keyL).setOrigin(0.5, 0);
+        this.p2Rocket = new Rocket(this, game.config.width/2-40, game.config.height - borderUISize - borderPadding, 'p2Fist', 0, keyA, keyD, keyG).setOrigin(0.5, 0);
 
         // add Spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
@@ -124,7 +131,7 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
-        this.starfield.tilePositionX -= 4;  // update tile sprite
+        this.starfield.tilePositionX -= 0.05;  // update tile sprite
 
         if(!this.gameOver) {
             this.p1Rocket.update();             // update p1
@@ -198,13 +205,13 @@ class Play extends Phaser.Scene {
             this.scoreRight.text = this.p2Score;
         }
 
-        var array = ['sfx_explosion1', 'sfx_explosion2', 'sfx_explosion3']
+        var array = ['sfx_explosion1', 'sfx_explosion2', 'sfx_explosion3', 'sfx_explosion4', 'sfx_explosion5', 'sfx_explosion6', 'sfx_explosion7', 'sfx_explosion8']
         //var randomfunction * how many there are
         let randomElement = array[Math.floor(Math.random() * array.length)];
 
         this.sound.play(randomElement);
 
         // code source: https://stackoverflow.com/questions/4550505/getting-a-random-value-from-a-javascript-array
-        
+
       }
 }
