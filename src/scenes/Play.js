@@ -11,6 +11,9 @@ class Play extends Phaser.Scene {
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.audio('sfx_back_music', './assets/backmusic.wav') //Copy-right Free Music: Fluffing a Duck by Kevin MacLeod
+        this.load.audio('sfx_explosion1', './assets/heavyOuch.wav') //
+        this.load.audio('sfx_explosion2', './assets/ouch.wav')
+        this.load.audio('sfx_explosion3', './assets/whomadethisgame.wav')
     }
 
     create() {
@@ -195,6 +198,13 @@ class Play extends Phaser.Scene {
             this.scoreRight.text = this.p2Score;
         }
 
-        this.sound.play('sfx_explosion');
+        var array = ['sfx_explosion1', 'sfx_explosion2', 'sfx_explosion3']
+        //var randomfunction * how many there are
+        let randomElement = array[Math.floor(Math.random() * array.length)];
+
+        this.sound.play(randomElement);
+
+        // code source: https://stackoverflow.com/questions/4550505/getting-a-random-value-from-a-javascript-array
+        
       }
 }

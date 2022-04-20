@@ -14,10 +14,10 @@ class Menu extends Phaser.Scene {
     create() {
         // menu text configuration
         let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            fontFamily: 'Arial',
+            fontSize: '30px',
+            backgroundColor: '#ff0000',
+            color: '#ffffff',
             align: 'right',
             padding: {
                 top: 5,
@@ -28,11 +28,15 @@ class Menu extends Phaser.Scene {
         
 
         // show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Use ←→ arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
+
+        this.add.text(game.config.width/2, game.config.height/2 - borderUISize*4 - borderPadding*4, 'The Extreme Multiplayer Experience', menuConfig).setOrigin(0.5);
+        menuConfig.backgroundColor = '#03ffff';
+        menuConfig.color = '#000';
+        this.add.text(game.config.width/2, game.config.height/2, 'P1: Use ←→ arrows to move & (L) to fire', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'P2: Use A + D to move & (G) to fire', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press ← for Single or → for Co-Op', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize*4 + borderPadding*4, 'Press ← for Easy or → for HARD', menuConfig).setOrigin(0.5);
 
         // menu Music = stops the music once a left or right button is pressed.
         this.menuMusic = this.sound.add('sfx_menu_music');
@@ -56,7 +60,7 @@ class Menu extends Phaser.Scene {
           game.settings = {
             spaceshipSpeed: 3,
             gameTimer: 60000
-            //multiplayer: false  // True if multiplayer
+
           }
           this.sound.play('sfx_select');
           this.scene.start("playScene");    
@@ -65,9 +69,9 @@ class Menu extends Phaser.Scene {
           // Player 2 Only Mode
           this.menuMusic.stop(); // stops the music
           game.settings = {
-            spaceshipSpeed: 3,
+            spaceshipSpeed: 5,
             gameTimer: 60000
-            //multiplayer: true // True if multiplayer   
+ 
           }
           this.sound.play('sfx_select');
           this.scene.start("playScene");    
